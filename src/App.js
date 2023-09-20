@@ -1,21 +1,13 @@
 import "./App.css";
-import AddToDo from "./components/sections/to-do-add/to-do-add";
-
 import "bootstrap/dist/css/bootstrap.min.css";
-import ShowToDo from "./components/sections/to-do-show/to-do-show";
-// import { useState } from "react";
+import AddToDo from "./components/sections/to-do-add/add-to-do";
+import ShowToDo from "./components/sections/to-do-show/show-to-do";
 import { useEffect, useState } from "react";
-// import "bootstrap/dist/js/bootstrap.bundle.min";
 
 function App() {
-  // let idCount = 2;
-  // let toDoList = [
-  //   {
-  //     id: "1",
-  //     content: "Hello From The Other Side",
-  //     completed: false,
-  //   },
-  // ];
+  //------------------- Use States ----------------//
+  let [idCount, incrementCount] = useState(2);
+  let [taskInputValue, setTaskInput] = useState("");
 
   let [toDoList, pushItem] = useState([
     {
@@ -24,153 +16,79 @@ function App() {
       completed: true,
     },
   ]);
-  let [idCount, incrementCount] = useState(2);
-  // let [completed, updateTask] = useState(false);
 
-  function addToDo() {
-    let toDoText = document.getElementById("to-do-input");
-    // console.log(toDoList, "list");
+  //------------------- Input Task Value----------------//
+  function onInputTaskChange(event) {
+    setTaskInput(event.target.value);
+  }
 
-    // let item = {
-    //   id: `${idCount}`,
-    //   content: toDoText.value,
-    //   completed: false,
-    // };
+  //------------------- Add Task ----------------//
+  function addToDo(event) {
+    event.preventDefault();
+    // console.log(event.target.querySelector("input"), "input");
+    // let toDoText = document.getElementById("to-do-input");
+    // counter length of the list
 
     let item = {
+      // id: `${toDoList.length + 1}`,
       id: `${idCount}`,
-      content: toDoText.value,
+      content: taskInputValue,
       completed: false,
     };
-    console.log(item);
 
     pushItem([...toDoList, item]);
 
     incrementCount(idCount + 1);
-    toDoText.value = "";
-    // idCount++;
-    // console.log(toDoList, "list");
+    event.target.querySelector("input").value = "";
+    setTaskInput("");
+    // document.getElementById("to-do-input").value = "";
   }
 
+  //------------------- Remove Task ----------------//
   function removeToDo(event) {
-    console.log(event.target);
+    // console.log(event.target);
     let currentID = event.target.id.split("-")[0];
-    console.log(currentID);
-    let newList = toDoList.filter(({ id }) => id !== currentID);
-    console.log(newList);
-    pushItem([...newList]);
-    console.log(toDoList, "after remove");
-  }
-
-  function doneToDo(event) {
-    console.log(event.target);
-    let currentID = event.target.id.split("-")[0];
-    console.log(currentID);
-
-    let found = toDoList.map((item) => {
-      if (item.id === currentID) {
-        item.completed = !item.completed;
-        console.log("found");
-      }
-      return item;
-      // return toDoList;
+    console.log(currentID, "current");
+    let newList = toDoList.filter(({ id }) => {
+      console.log(id, "id");
+      return id !== currentID;
     });
-
-    console.log(found, "found");
-    // console.log([...found]);
-    pushItem([...found]);
+    console.log(newList, "remove");
+    pushItem([...newList]);
+    // console.log(toDoList, "after remove");
   }
 
+  //------------------- Done Task ----------------//
+  function doneToDo(event) {
+    // console.log(event.target);
+    let currentID = event.target.id.split("-")[0];
+    // console.log(currentID);
+
+    let foundItem = toDoList.find(({ id }) => id === currentID);
+    foundItem.completed = !foundItem.completed;
+
+    console.log(foundItem, "found");
+    console.log(toDoList, "toDoFound");
+    pushItem([...toDoList]);
+  }
+
+  //------------------- Use Effect ----------------//
   useEffect(() => {
     console.log("mounting");
-    console.log(toDoList);
-    console.log(idCount);
-  }, [toDoList, idCount]);
-
-  // toDoList
-  // .push({
-  //   id: `${idCount}`,
-  //   content: toDoText.value,
-  //   completed: false,
-  // });
-
-  // let x = toDoList.push(item);
-  // toDoList.push(item);
-  // pushItem(x);
-  // pushItem(toDoList);
-  // console.log(toDoList);
-
-  // let toDoText = document.getElementById("to-do-input").value;
-  // toDoList.push({
-  //   id: idCount,
-  //   content: toDoText,
-  //   completed: false,
-  // });
-  // idCount++;
-  // console.log(toDoList);
-  // setCounter(idCount + 1);
-
-  // let [toDoList, pushItem] = useState({
-  //   id: "1",
-  //   content: "Hello From The Other Side",
-  //   completed: false,
-  // }); // function setCounter(){}
-
-  // let [toDoList, pushItem] = useState([
-  //   {
-  //     id: 1,
-  //     content: "Hello From The Other Side",
-  //     completed: false,
-  //   },
-  // ]);
-
-  // function pushItem(item) {
-  //   toDoList.push(item);
-  // }
-  // let [name, setName] = useState("");
-
-  // useEffect(() => {
-  //   console.log("mounting");
-  // }, [toDoList]);
-
-  // useEffect(() => {
-  //   // /on detsroy function only
-  //   return () => {
-  //     console.log("destroy");
-  //   };
-  // });
-
-  // useEffect(() => {
-  //   console.log(idCount,'hh')
-  //   // if (idCount !== 0) {
-  //   //   console.log("counter changed");
-  //   // }
-  //   // counter++
-  //   // setCounter(idCount+1)
-  // }, [idCount]);
-  //mounting => dependencies array empty
-  //update => dependcies array with state or more
-
-  // useEffect(() => {
-  //   if (name !== "") {
-  //     console.log("name changed");
-  //   }
-  // }, [name]);
-
-  // const updateName = () => {
-  //   setName("test");
-  // };
-
-  // const handleClick = () => {
-  //   // console.log('bbbbbb')
-  //   // counter = counter + 1;
-  // };
+    // console.log(toDoList);
+    // console.log(idCount);
+    // console.log(taskInputValue, "jdsfhdjshf");
+  }, [toDoList, idCount, taskInputValue]);
 
   return (
     <div className="App">
       <header className="App-header">
-        <AddToDo addFun={addToDo} list={toDoList} />
-        {console.log(toDoList)}
+        <AddToDo
+          addToDoTask={addToDo}
+          taskValue={taskInputValue}
+          onChange={onInputTaskChange}
+          // onSubmit={onInputTaskSubmit}
+        />
         <ShowToDo
           toDoList={toDoList}
           removeToDo={(event) => removeToDo(event)}

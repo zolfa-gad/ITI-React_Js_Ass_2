@@ -1,15 +1,12 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-// import "bootstrap/dist/js/bootstrap.bundle.min";
-
-function ButtonItem(props) {
+function ButtonItem({ id, text, color, className, onClick }) {
   return (
     <div className="">
       <button
-      id={props.id}
-        onClick={props.onClick}
-        className={`btn btn-${props.color} ${props.className}`}
+        id={id}
+        onClick={onClick}
+        className={`btn btn-${color} ${className}`}
       >
-        {props.text}
+        {text}
       </button>
     </div>
   );
