@@ -1,6 +1,6 @@
 function ButtonItem({ id, text, color, className, onClick }) {
   return (
-    <div className="">
+    <div className="Button">
       <button
         id={id}
         onClick={onClick}

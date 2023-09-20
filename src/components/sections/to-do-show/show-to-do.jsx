@@ -7,8 +7,6 @@ function ShowToDo({ toDoList, removeToDo, doneToDo }) {
         <h2 className="fs-1 fw-bolder">Let's Get Some Work Done</h2>
         <span className="d-block fs-6">Show New To Do</span>
         {toDoList.map((item, index) => {
-          console.log(item, "item");
-          console.log(item.id);
           return (
             <ToDoItem
               item={item}
