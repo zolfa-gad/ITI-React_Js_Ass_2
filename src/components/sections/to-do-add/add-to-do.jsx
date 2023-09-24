@@ -16,6 +16,7 @@ function AddToDo({ addToDoTask, taskValue, onChange }) {
             placeholder="Enter New To Do Task"
             onChange={onChange}
             defaultValue={taskValue}
+            // value={taskValue}
           />
 
           <ButtonItem
